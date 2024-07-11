@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Review Đồ Công Nghệ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles-index.css">
+</head>
+<body>
+
+<header>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3dMn8cggNo6JKUrBC9er1K4Fs1mGcF5vXvA&s" alt="Logo" class="logo-image">
+    
+    <div class="top">Review Đồ Công Nghệ</div>
+
+    <nav>
+        <a href="#">Trang chủ</a>
+        <a href="main.html">Quản lý</a>
+    </nav>
+</header>
+
+<div class="product-container">
+    <!-- JavaScript sẽ động dữ liệu sản phẩm ở đây -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="srcipt-index.js"></script>
+<script>
+   $(document).ready(function() {
+    // Flag to check if data has been fetched
+    let dataFetched = false;
+
+    // Function to fetch and display products
+    function fetchProducts() {
+        fetch('./products.json')
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing content
+                $('.product-container').empty();
+
+                // Append each product
+                data.forEach(product => {
+                    var productHTML = `
+                        <div class="product-section">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            <div class="product-details">
+                                <h2 class="product-title">${product.name}</h2>
+                                <p><strong>Thương hiệu:</strong> ${product.brand}</p>
+                                <p><strong>CPU:</strong> ${product.cpu}</p>
+                                <p><strong>Giá:</strong> ${product.price}</p>
+                                <p><strong>Màn Hình:</strong> ${product.screen}</p>
+                                <p><strong>Đánh giá:</strong> ${product.rating} / 5</p>
+                                <p>${product.review}</p>
+                                <a href="#" class="product-link">Xem thêm</a>
+                            </div>
+                        </div>
+                    `;
+                    $('.product-container').append(productHTML);
+                });
+
+                // Set dataFetched to true
+                dataFetched = true;s
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
+    // Check if data has been fetched before fetching again
+    if (!dataFetched) {
+        fetchProducts();
+    }
+});
+
+</script>
+
+</body>
+</html>
